@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Angular-js</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.0/superhero/bootstrap.min.css">
+    <style>
+        body{
+            width: 95%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body ng-app="app">
+
+    <div class="container">
+        <div ng-controller="headerCtrl" class="page-header">
+            <h1>Contact  Manager</h1>
+            <p class="text-right">{{ nowDate | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+        </div>
+    </div>
+
+    <section ng-controller="contactsCtrl">
+
+        <p class="text-right">
+            <button ng-click="toggle()" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>&nbsp; Nouveau</button>
+        </p>
+
+        <div ng-show="formIsShow" class="well">
+            <form novalidate class="form-horizontal">
+                <fieldset>
+                    <legend>Ajouter un contact</legend>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <label ng-repeat="civility in civilities" style="margin-right:1%;">
+                                <input ng-model="contact.civility" type="radio" name="contactCivility"
+                                       ng-value="civility.name"> {{civility.name}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <input ng-model="contact.firstName" type="text" name="contactFirstName" class="form-control"
+                                   placeholder="Prénom" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <input ng-model="contact.lastName" type="text" name="contactLastName" class="form-control"
+                                   placeholder="Nom" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <input ng-model="contact.email" type="email" name="contactEmail" placeholder="E-mail"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <select ng-model="contact.category" ng-options="category.name for category in categories"
+                                    class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <textarea ng-model="contact.role" name="contactName" class="form-control" rows="3"
+                                      placeholder="Note"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 col-lg-offset-8">
+                            <button ng-click="contactSave()" class="btn btn-primary">ENREGISTRER</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="list-group">
+
+            <!-- Prévisualisation du nouveau contact -->
+            <a ng-show="contact.firstName" href="#" class="list-group-item list-group-item-info">
+                <h4 class="list-group-item-heading">{{ contact.civility }} {{ contact.firstName | ucwords }} {{ contact.lastName | uppercase }}</h4>
+                <p class="list-group-item-text">{{ contact.email }}</p>
+                <p class="list-group-item-text">{{ contact.category.name }}</p>
+                <p class="list-group-item-text">{{ contact.role }}</p>
+            </a>
+
+            <!-- Liste des contacts existants -->
+            <a ng-repeat="contact in contacts" href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">{{contact.firstName}} {{contact.lastName | uppercase}}</h4>
+                <p class="list-group-item-text">{{contact.role}}</p>
+            </a>
+
+
+            <!-- ce qu'il aurait fallu faire sans angular -->
+            <!--<a href="#" class="list-group-item">-->
+                <!--<h4 class="list-group-item-heading">Lauraine Kich</h4>-->
+                <!--<p class="list-group-item-text">Cuisinière</p>-->
+            <!--</a>-->
+            <!--<a href="#" class="list-group-item">-->
+                <!--<h4 class="list-group-item-heading">Hal Ho</h4>-->
+                <!--<p class="list-group-item-text">Hotliner</p>-->
+            <!--</a>-->
+        </div>
+
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/service/localStorageService.js"></script>
+    <script src="js/filter/ucwordsFilter.js"></script>
+</body>
+</html>
