@@ -10,7 +10,7 @@ ContactManager.controller("headerCtrl",function($scope){
 
 ContactManager.controller('contactsCtrl',function($scope, localStorage)
 {
-    //création d'un objet contact
+    //création d'un objet contact qui permettra l'initialisation du formulaire en même temps
     function resetForm()
     {
         $scope.contact =
@@ -68,15 +68,20 @@ ContactManager.controller('contactsCtrl',function($scope, localStorage)
 
     $scope.contactSave = function()
     {
+        //on cache le formulaire
         $scope.formIsShow = false;
 
+        //on charge le local storage
         var contacts = localStorage.load('contacts');
+        //on ajoute les dernières informations entrées
         contacts.push($scope.contact);
+        //on enregistre dans le local storage
         localStorage.save('contacts',contacts);
 
+        //on recharge le local storage pour l'afficher avec la dernière infos
         $scope.contacts = localStorage.load('contacts');
-    //localStorage.save('contacts',contacts);
 
+        //on réinitialise le formulaire
         resetForm();
     };
 });
