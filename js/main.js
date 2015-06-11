@@ -15,11 +15,12 @@ ContactManager.controller('contactsCtrl',function($scope, localStorage)
     {
         $scope.contact =
         {
-            'firstName':    null,
-            'lastName':     null,
-            'email':        null,
-            'role':         null,
-            'category':     null
+            firstName:    null,
+            lastName:     null,
+            email:        null,
+            role:         null,
+            category:     null,
+            civility:     null
         };
     }
     resetForm();
