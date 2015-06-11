@@ -14,9 +14,15 @@ ContactManager.service('localStorage', function($window)
         return angular.fromJson($window.localStorage.getItem(key));
     };
 
+    var clear = function()
+    {
+        $window.localStorage.clear();
+    };
+
     return{
         save : Save,
-        load : Load
+        load : Load,
+        clear: clear
     };
 
 });

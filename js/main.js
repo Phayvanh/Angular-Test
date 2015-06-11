@@ -54,17 +54,28 @@ ContactManager.controller('contactsCtrl',function($scope, localStorage)
             { id: 3, name: 'Divers' }
         ];
 
-    //au lancement on cache le formulaire
-    $scope.formIsShow = false;
+    //au lancement on cache le formulaire et le boutton effacer
+    $scope.formIsShow =         false;
+    $scope.clearButtonIsShow =  false;
 
-    if(localStorage.load('contacts') === null)localStorage.save('contacts',[]);
     $scope.contacts = localStorage.load('contacts');
 
+    //si au chargement il y'a déjà des données enregistrées on affiche le bouton effacer
+    if (localStorage.load('contacts') != null)$scope.clearButtonIsShow = true;
+    
 
     $scope.toggle = function()
     {
-//        $scope.formIsShow = !($scope.formIsShow);//fait la même chose que le ternaire en-dessous
+        //$scope.formIsShow = !($scope.formIsShow);//fait la même chose que le ternaire en-dessous pour l'affichage du formulaire
         $scope.formIsShow = $scope.formIsShow == false;
+
+        //s'il n'y a rien dans le localStorage on créé un tableau de contacts
+        if(localStorage.load('contacts') === null)
+        {
+            localStorage.save('contacts', []);
+            $scope.clearButtonIsShow =  false;
+        }
+
     };
 
     $scope.contactSave = function()
@@ -84,5 +95,17 @@ ContactManager.controller('contactsCtrl',function($scope, localStorage)
 
         //on réinitialise le formulaire
         resetForm();
+
+        $scope.clearButtonIsShow = true;
     };
+
+    $scope.clearStorage = function()
+    {
+        //on efface tout le local storage
+        localStorage.clear();
+        //on recharge
+        $scope.contacts = localStorage.load('contacts');
+        //le bouton ne sert plus à rien
+        $scope.clearButtonIsShow = false;
+    }
 });
